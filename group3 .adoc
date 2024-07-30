@@ -79,6 +79,7 @@ HTTP Headers：
 * Authorization：身份驗證信息。
 
 舊的客戶端的HttpHeader，大多數已經廢除。 
+
 * 例子:
 x-content-type-options:nosniff(響應式網頁相關)
 
@@ -133,26 +134,78 @@ EX.代理伺服器連線
 * 偵測HTTP請求其間是否有變化，中間路由若有錯誤可用此方法
 * HTML表單內不適用
 
-== CORS 運作流程和原理
+== 什麼是跨域資源共享(Cross-Origin Resource Sharing) ?
 瀏覽器的同源政策(Same-Origin-Policy)
-同源必須必須符合三項條件:
 
+同源必須符合三項條件:
+. 同通訊埠(port)
 . 同通訊協定(protocol)
 . 同網域(domain)
-. 同通訊埠(port)
 
-URI: https://eip.systex.com
+假如現在後端設定 Access-Control-Allow-Origin 為: https://eip.systex.com
+
 [source, javascript]
 ----
-http://eip.systex.com  // 不同 protocal, 非同源
+http://eip.systex.com/  // 不同 protocal, 非同源
 
-http://eip.systex.com:5000 // 不同 port, 非同源
+http://eip.systex.com:5000/ // 不同 port, 非同源
 
-https://eip.system.com  // 不同 domain, 非同源
+https://eip.system.com/  // 不同 domain, 非同源
 
 http://eip.systex.com/Login.aspx // 同源
 ----
 
+=== 流程: 
+
+==== 一、簡單請求(Simple Requests)
+
+當 Request Method 為：GET、POST、HEAD 
+瀏覽器就會發送 Simple Request 給 Server, 並在 header 上帶上 Origin
+
+==== Request Headers
+----
+GET / HTTP/1.1
+Host: eip.systex.com
+Connection: keep-alive
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,/;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-TW,en;q=0.9
+Origin: http://example.com/
+----
+
+==== Response Headers
+----
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1234
+Access-Control-Allow-Origin: http://example.com/
+----
+
+
+==== 二、預檢請求(Preflighted requests)
+
+只要不符合簡單請求，瀏覽器會先送一次 HTTP Request, 一旦預檢請求成功完成，真正的請求才會被送出, 但預檢請求也不是每次都會觸發，可以設定 Access-Control-Max-Age 預檢請求回應快取的秒數，也就是說在這秒數內可以向 Simple Request 一樣, 直接發送請求。
+
+
+== 什麼是跨站請求偽造(Cross Site Reuqest Forgery)？
+在使用者已經驗證身份的網站中, 執行惡意的偽造操作。
+
+Step1: 使用者成功登入 A 銀行網站的帳戶，並且代表使用者身份的 cookie 在 local 保存下來，所以下次再來訪問 A 銀行網站時，就不用重新登入
+
+Step2: 因為使用者沒有登出 A 銀行網站的帳戶，在瀏覽 B 惡意網站時，B 網站有個被設為透明的圖片，因為是透明的，所以使用者在畫面上看不到，然而該圖片包含一段惡意程式碼，連結如下。
+
+----
+
+<img
+  src="http://a-bank.com/transfer.do?acct=BadGuy&amount=100000 HTTP/1.1"
+  width="0"
+  height="0"
+/>
+
+----
+
+Step3: 雖然使用者看不到此圖片， 但是，瀏覽器仍會向 http://a-bank.com/ 提交請求，同時此請求是帶有使用者的 cookie，所以 A 銀行可以辨識使用者身份，這個惡意攻擊會執行成功。
 === 流程: 
 
 ==== 一、簡單請求(Simple Requests)
