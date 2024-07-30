@@ -102,13 +102,13 @@ OPTIONS：功能：請求服務器回應所支持的HTTP方法。
 
 TRACE： 功能：回顯服務器接收到的請求，主要用於診斷。
 
-同源必須符合三項條件:
-
-. 同通訊協定(protocol)
-. 同網域(domain)
 == 什麼是跨域資源共享(Cross-Origin Resource Sharing) ?
 瀏覽器的同源政策(Same-Origin-Policy)
+
+同源必須符合三項條件:
 . 同通訊埠(port)
+. 同通訊協定(protocol)
+. 同網域(domain)
 
 假如現在後端設定 `Access-Control-Allow-Origin` 為: `https://eip.systex.com`
 
