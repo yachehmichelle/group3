@@ -86,21 +86,46 @@ request body：POST或PUT等方法中包含的數據，通常是表單數據、J
 response body：服務器返回的數據，可能是HTML頁面、圖像、JSON數據等。
 
 == Request Method
-常用：GET、POST、PUT、PATCH、DELETE
+===GET
+*查詢，會回傳結果
+*帶參數的查詢會加在URL上面
+[帶參數GET方法URL]
+---
+https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
+---
 
-GET：功能：請求從服務器獲取資源（如HTML文件、圖像、JSON數據）。
+==HEAD
+*查詢對象的資訊
+*不會回傳資料
 
-POST： 功能：將數據提交到服務器（如提交表單、上傳文件）。
-PUT： 功能：將數據上傳到指定資源位置（如更新文件或數據）。
-DELETE：功能：請求服務器刪除指定資源。
+===POST
+*增和改
+*較常用在新增資料
+*修改的項目會包在body裡面
 
-PATCH：功能：對資源進行部分修改。
+===PUT
+*增、改	
+*常用在修改資料
+*整筆覆蓋
+*若修改對象不存在 => 新增一筆新的
 
-HEAD：功能：類似於GET，但只獲取HTTP標頭而不返回消息體。
+===PATCH
+*修改資料
+*只修改異動的部分部分
 
-OPTIONS：功能：請求服務器回應所支持的HTTP方法。
+===DELETE
+*刪除資料
 
-TRACE： 功能：回顯服務器接收到的請求，主要用於診斷。
+===CONNECT
+*建立連線
+EX.代理伺服器連線
+
+===OPTIONS
+*查詢對方可用支援那些HTTP 方法
+
+===TRACE		
+*偵測HTTP請求其間是否有變化，中間路由若有錯誤可用此方法
+*HTML表單內不適用
 
 == CORS 運作流程和原理
 瀏覽器的同源政策(Same-Origin-Policy)
