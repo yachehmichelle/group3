@@ -1,0 +1,175 @@
+:source-highlighter: highlight.js
+:highlightjs-theme: atom-one-dark-reasonable
+[,javascript]
+
+= Object literal (物件實字)
+
+* 用大括號來建立物件的語法
+* 屬性用名值對(name-value pairs)表示
+
+[source, javascript]
+
+----
+const person = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30,
+    isEmployed: true
+};
+
+----
+
+* ES6後 
+
+* 物件屬性初始化
+* 變數名稱和屬性名稱一樣
+
+[source, javascript]
+----
+let text = '我是誰';
+let msg2 = { // 縮寫前
+  text: text
+};
+let msg2 = { text }; // 縮寫後
+
+----
+
+== Optional Chaining
+
+* 可選串連運算子
+* 避開TypeError Exception
+* 在「要確認的屬性或函式」後方「加上或換上」「?.」
+
+[source, javascript]
+
+----
+const releasedYear = phone?.year;
+//先確認 phone 屬性再取得 year 屬性值回傳
+----
+
+== JavaScript Object vs JSON
+
+* JSON就是一組字串
+* 在使用{ }建立物件時，屬性名稱是可以有引號也可以沒有的，但在JSON格式中，該屬性名稱一定要有引號
+* 物件中的值為function，是無法透過JSON傳遞的
+
+* 將物件轉成JSON格式 JSON.stringify();
+* 將JSON格式轉成物件 JSON.parse()
+
+
+== HTTP
+HTTP（HyperText Transfer Protocol，超文本傳輸協議）是一個應用層協議，用於在客戶端和服務器之間傳輸超文本數據（如HTML）。它是Web的基礎協議，定義了請求和響應的結構，以及如何通過互聯網進行通信。
+
+主要特點：
+無狀態(stateless)：每個請求與其之前或之後的請求無關。
+可擴展(scalable)：通過標頭和方法可以擴展功能。
+安全性：HTTPS（HTTP Secure）提供了加密和身份驗證。
+
+== HTTP Headers/Payload
+HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
+
+HTTP Headers：
+請求標頭：包含客戶端向服務器發送的 Meta Data（如瀏覽器類型、 etc..）。
+常見請求Http headers：
+
+Host：指定目標服務器的主機名。
+
+User-Agent：客戶端應用的標識信息。
+
+Accept：客戶端接受的MIME類型。
+
+Authorization：身份驗證信息。
+
+Payload：
+request body：POST或PUT等方法中包含的數據，通常是表單數據、JSON數據等。
+
+response body：服務器返回的數據，可能是HTML頁面、圖像、JSON數據等。
+
+== Request Method
+常用：GET、POST、PUT、PATCH、DELETE
+
+GET：功能：請求從服務器獲取資源（如HTML文件、圖像、JSON數據）。
+
+POST： 功能：將數據提交到服務器（如提交表單、上傳文件）。
+PUT： 功能：將數據上傳到指定資源位置（如更新文件或數據）。
+DELETE：功能：請求服務器刪除指定資源。
+
+PATCH：功能：對資源進行部分修改。
+
+HEAD：功能：類似於GET，但只獲取HTTP標頭而不返回消息體。
+
+OPTIONS：功能：請求服務器回應所支持的HTTP方法。
+
+TRACE： 功能：回顯服務器接收到的請求，主要用於診斷。
+
+== CORS 運作流程和原理
+瀏覽器的同源政策(Same-Origin-Policy)
+同源必須必須符合三項條件:
+
+. 同通訊協定(protocol)
+. 同網域(domain)
+. 同通訊埠(port)
+
+URI: https://eip.systex.com
+[source, javascript]
+----
+http://eip.systex.com  // 不同 protocal, 非同源
+
+http://eip.systex.com:5000 // 不同 port, 非同源
+
+https://eip.system.com  // 不同 domain, 非同源
+
+http://eip.systex.com/Login.aspx // 同源
+----
+
+=== 流程: 
+
+==== 一、簡單請求(Simple Requests)
+
+當 Request Method 為：GET POST HEAD
+瀏覽器會發送 Request 給 Server, 並在 header 上帶上 Origin
+
+===== Request Headers
+----
+GET / HTTP/1.1
+Host: eip.systex.com
+Connection: keep-alive
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-TW,en;q=0.9
+Origin: http://example.com
+----
+
+這時候在後端 Server 就會去驗證
+如果要設定特定來源的請求的話, 後端工程師需要去設定 Access-Control-Allow-Origin
+
+===== Response Headers
+----
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1234
+Access-Control-Allow-Origin: http://example.com
+----
+
+
+==== 二、預檢請求(Preflighted requests)
+
+瀏覽器會先做一次 HTTP 請求, 一旦預檢請求成功完成，真正的請求才會被送出。
+
+
+== CSRF 運作流程和原理
+使用者已經驗證身份的網站中, 執行惡意的偽造操作
+
+Step1: 使用者成功登入 A 銀行網站的帳戶，並且代表使用者身份的 cookie 在本地保存下來，所以下次再來 A 銀行網站時，不用重新登入
+
+Step2: 由於使用者沒有登出 A 銀行網站的帳戶，在瀏覽 B 惡意網站時，B 網站有個被設為透明的圖片，因為是透明的，所以使用者在畫面上看不到，然而該圖片包含一段惡意程式碼，連結如下。
+----
+
+<img
+  src="http://a-bank.com/transfer.do?acct=BadGuy&amount=100000 HTTP/1.1"
+  width="0"
+  height="0"
+/>
+
+----
