@@ -86,46 +86,48 @@ request body：POST或PUT等方法中包含的數據，通常是表單數據、J
 response body：服務器返回的數據，可能是HTML頁面、圖像、JSON數據等。
 
 == Request Method
-===GET
-*查詢，會回傳結果
-*帶參數的查詢會加在URL上面
+.GET
+* 查詢
+* 會回傳結果帶參數的查詢會加在URL上面
 [帶參數GET方法URL]
+
 ---
 https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
+
 ---
 
-==HEAD
-*查詢對象的資訊
-*不會回傳資料
+.HEAD
+* 查詢對象的資訊
+* 不會回傳資料
 
-===POST
-*增和改
-*較常用在新增資料
-*修改的項目會包在body裡面
+.POST
+* 增和改
+* 較常用在新增資料
+* 修改的項目會包在body裡面
 
-===PUT
-*增、改	
-*常用在修改資料
-*整筆覆蓋
-*若修改對象不存在 => 新增一筆新的
+.PUT
+* 增、改	
+* 常用在修改資料
+* 整筆覆蓋
+* 若修改對象不存在 => 新增一筆新的
 
-===PATCH
-*修改資料
-*只修改異動的部分部分
+.PATCH
+* 修改資料
+* 只修改異動的部分部分
 
-===DELETE
-*刪除資料
+.DELETE
+* 刪除資料
 
-===CONNECT
-*建立連線
+.CONNECT
+* 建立連線
 EX.代理伺服器連線
 
-===OPTIONS
-*查詢對方可用支援那些HTTP 方法
+.OPTIONS
+* 查詢對方可用支援那些HTTP 方法
 
-===TRACE		
-*偵測HTTP請求其間是否有變化，中間路由若有錯誤可用此方法
-*HTML表單內不適用
+.TRACE		
+* 偵測HTTP請求其間是否有變化，中間路由若有錯誤可用此方法
+* HTML表單內不適用
 
 == CORS 運作流程和原理
 瀏覽器的同源政策(Same-Origin-Policy)
