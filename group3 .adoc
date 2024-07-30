@@ -166,8 +166,11 @@ EX.代理伺服器連線
 瀏覽器的同源政策(Same-Origin-Policy)
 
 同源必須符合三項條件:
+
 . 同通訊埠(port)
+
 . 同通訊協定(protocol)
+
 . 同網域(domain)
 
 假如現在後端設定 Access-Control-Allow-Origin 為: https://eip.systex.com
