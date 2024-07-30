@@ -92,6 +92,8 @@ const releasedYear = phone?.year;
 * 安全性：HTTPS（HTTP Secure）提供了加密和身份驗證。
 
 == HTTP Headers/Payload
+
+
 ==== HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
 
 HTTP Headers：
@@ -106,17 +108,49 @@ HTTP Headers：
 
 * Authorization：身份驗證信息。
 
+
 舊的客戶端的HttpHeader，大多數已經廢除。 
 
-* 例子:
+* 例子: 
 x-content-type-options:nosniff(響應式網頁相關)
 
 
+IANA(互聯網地址分配的機構)將HTTPHeadr分類：
 
-Payload：
-request body：POST或PUT等方法中包含的數據，通常是表單數據、JSON數據等。
+==== 1.Request Headers
 
-response body：服務器返回的數據，可能是HTML頁面、圖像、JSON數據等。
+* 包含有關請求的資訊（request)，如用戶端的詳細資訊或特定的請求參數。
+
+==== 2.Response Headers
+
+* 包含回應的資訊。
+
+==== 3.Representation header
+
+表示是特定資源的不同形式， request 和respon都支援 用於客戶端解析
+相同資源轉換成不同資訊
+
+
+* Content-Type 格式
+
+text/html、application/json、XML...
+
+* Content-Encoding 編碼
+
+gzip、compress...
+
+* Content-Language：　語言
+
+en、tw...
+
+* Content-Location 檔案的位置(可能和URL位置不同)
+
+Content-Location: /documents/document1.html
+
+
+==== Payload：
+
+request和respon包含的數據內容，通常是表單數據、JSON數據等服務器返回的數據。
 
 == Request Method
 .GET
