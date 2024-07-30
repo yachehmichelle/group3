@@ -94,7 +94,7 @@ const releasedYear = phone?.year;
 == HTTP Headers/Payload
 
 
-==== HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
+HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
 
 HTTP Headers：
 請求標頭：包含客戶端向服務器發送的資料和訊息(如瀏覽器類型、 傳遞的資料類型etc..）。
