@@ -58,27 +58,31 @@ const releasedYear = phone?.year;
 
 
 == HTTP
-HTTP（HyperText Transfer Protocol，超文本傳輸協議）是一個應用層協議，用於在客戶端和服務器之間傳輸超文本數據（如HTML）。它是Web的基礎協議，定義了請求和響應的結構，以及如何通過互聯網進行通信。
-
-主要特點：
-無狀態(stateless)：每個請求與其之前或之後的請求無關。
-可擴展(scalable)：通過標頭和方法可以擴展功能。
-安全性：HTTPS（HTTP Secure）提供了加密和身份驗證。
+.主要特點：
+* 無狀態(stateless)：每個請求與其之前或之後的請求無關。
+* 可擴展(scalable)：通過標頭和方法可以擴展功能。
+* 安全性：HTTPS（HTTP Secure）提供了加密和身份驗證。
 
 == HTTP Headers/Payload
-HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
+==== HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
 
 HTTP Headers：
-請求標頭：包含客戶端向服務器發送的 Meta Data（如瀏覽器類型、 etc..）。
+請求標頭：包含客戶端向服務器發送的資料和訊息(如瀏覽器類型、 傳遞的資料類型etc..）。
 常見請求Http headers：
 
-Host：指定目標服務器的主機名。
+* Host：指定目標服務器的主機名。
 
-User-Agent：客戶端應用的標識信息。
+* User-Agent：客戶端應用程序的資訊（如瀏覽器類型和版本）
 
-Accept：客戶端接受的MIME類型。
+* Accept：客戶端接受類型(text/html, application/json)
 
-Authorization：身份驗證信息。
+* Authorization：身份驗證信息。
+
+舊的客戶端的HttpHeader，大多數已經廢除。 
+* 例子:
+x-content-type-options:nosniff(響應式網頁相關)
+
+
 
 Payload：
 request body：POST或PUT等方法中包含的數據，通常是表單數據、JSON數據等。
