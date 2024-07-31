@@ -84,6 +84,7 @@ const releasedYear = phone?.year;
 //先確認 phone 屬性再取得 year 屬性值回傳
 ----
 ==== Nullish coalescing operator
+
 空值合併運算子
 在「要確認的屬性或函式」後方「加上或換上」「??」
 當左側的操作數為null或者undefined時，返回其右側操作數，否則返回左側操作數
@@ -118,6 +119,30 @@ image::JSON.parse.jpg[]
 * 無狀態(stateless)：每個請求與其之前或之後的請求無關
 * 可擴展(scalable)：通過標頭和方法可以擴展功能
 * 安全性：HTTPS（HTTP Secure）提供了加密和身份驗證
+
+==== stateless vs. stateful
+
+[width=85%, cols="2,4,3"]
+[options="header"]
+[%autowidth]
+|===
+| |stateless |Stateful
+|定義 |每次用戶端發請求，伺服器都視為全新的請求
+
+=>依靠用戶端給予的資訊
+
+|追蹤session或是transactions ，並根據該歷史記錄對相同的輸入做出不同的反應 
+
+=>根據的先前的紀錄而改變執行結果
+
+|優點
+|減少資源消耗，特別是在處理大量短期請求時更具效率和可擴展性|記住用戶端的操作，提供個性化的用戶體驗
+|缺點
+|無法提供個人化體驗，需額外的機制（如 cookies 或 token）來保存和傳遞狀態信息。|耗費較多資源追蹤seeeion和transactions
+|例子|HTTP | session
+|===
+
+
 
 ** HTTP status Code不屬於狀態，是請求完成後的結果
 
@@ -184,8 +209,26 @@ response中使用的cache
 
 * 例子: 
 
- x-content-type-options:　nosniff //響應式網頁相關 
+ x-content-type-options:　nosniff 
  
+ //規定只能遵照context-type的格式解析資源，提高網頁安全性，避免MIME類型混淆
+ 
+
+補充：
+
+MIME：標示網路上各種文件類型的標準，如：
+
+ * text/html：HTML 文件
+ * text/plain：純文本文件
+ * image/jpeg：JPEG 圖像
+ * image/png：PNG 圖像
+ * application/json：JSON 文件
+
+MIME類型混淆:伺服器識別資源類型時，解析錯誤。
+
+如將javascript標記為text/plain，誘導伺服器去解析其內容
+
+
 
 
 === HTTP Headr分類：
@@ -271,6 +314,9 @@ Response Payload (Response  body) : 伺服器端回傳Response所攜帶的資源
 多部分編碼格式
 |Context-type 
 | application/json .1+| application/x-www-form-urlencoded
+
+ multipart/form-data
+
 |資料格式|{
   "name": "John Doe",
   "age": 30
@@ -325,6 +371,17 @@ EX.代理伺服器連線
 * HTML表單內不適用
 
 ==== hTTP method 比較
+
+ * SAFE：不會對伺服器進行任何修改
+
+ * IDEMPOTENT：重新導向(重複發送相同的請求)結果完全相同
+
+ * CACHEABLE:允許快取
+
+此為規範，實務上並非完全遵照，有部分內容僅在特定條件下才成立
+
+EX: GET請求的若重新發送的同時，伺服器上的資源有被更動過，則回傳的結果不一致
+
 [width=75%, cols="1,1,1,1,2,6"]
 [options="header"]
 |===
@@ -361,8 +418,18 @@ EX.代理伺服器連線
 ==== 200 OK
 請求成功。 
 
+==== 300
+
+==== 301
+暫時的重導向
+
+==== 302 永久的重導向
+
+
 ==== 304 Not Modified
 用戶重新導向頁面時不需重新發request
+
+==== 400 bad request
 
 ==== 401 Unauthorized
 伺服器無法驗證用戶端身分的時候回傳，並夾帶 "WWW-Authenticate"的，告訴用戶端必須提供身分驗證的訊息。
@@ -372,6 +439,9 @@ EX.代理伺服器連線
 
 ==== 405 Method Not Allowed
 伺服器已知請求方法，但目標資源不支援。例如不允許呼叫DELETE刪除資源。
+
+
+==== 500 Internal Server Error
 
 ==== 503 Service Unavailable
 伺服器尚未準備好處理請求。
