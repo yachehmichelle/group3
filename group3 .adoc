@@ -105,7 +105,48 @@ const releasedYear = phone?.year;
 
 ---
 
+=== HTTP Header包含的內容
+1.Authentication 驗證
+驗證用戶端身分，以保護伺服器端安全
 
+ WWW-Authenticate: Basic realm="Example"
+
+2.Caching 快取
+藉由重複使用先前取過的資源，減少網路傳輸量
+
+request中使用的cache
+
+ Cache-Control: no-store //不儲存任何快取資料
+
+response中使用的cache
+
+ Cache-Control: max-age=<秒數> //快取資料的有效時間
+  
+ 
+3.Conditionals 條件式
+客戶端在特定條件下請求資源，節省頻寬
+ 
+ If-Modified-Since: Wed, 21 Oct 2020 07:28:00 GMT //自2020/10/21開始資源未被修改則抓取本地站存的資源
+ 
+4.Connection management 連線管理
+客戶端與伺服器端的連線狀態
+ 
+ Connection: keep-alive //與伺服器保持連線
+
+5.Content negotiation
+資源的表示方式
+
+ Accept-Language: en-US //英文
+
+6.Cookies
+紀錄用戶訊息
+  
+  Cookie: VISITOR_INFO1_LIVE=-obHrhCAQzA; VISITOR_PRIVACY_METADATA=CgJUVxIEGgAgLQ%3D%3D; YSC=Wf57uX-mbBc
+
+7.CORS
+
+  HTTPS的安全機制，可以跨到不同網站取資源
+ 
 === HTTP Headers：
 
 客戶端和服務器之間互動所附加的的訊息(如瀏覽器類型、 傳遞的資料類型etc..)
@@ -119,7 +160,7 @@ const releasedYear = phone?.year;
  
 
 
-HTTP Headr分類：
+=== HTTP Headr分類：
 
 ==== 1.Request Headers
 
@@ -130,17 +171,18 @@ HTTP Headr分類：
 
   * Host: 訪問的伺服器主機名稱
   
-   Host: www.w3schools.com
-
+  Host: www.w3schools.com
+ 
   * User-Agent：客戶端應用程序的資訊
     
-   User-Agent：　Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+   User-Agent：PostmanRuntime/7.40.0
 
   * Accept-Encoding： 客戶端編碼格式
 
   　Accept-Encoding: gzip, deflate, br
 
   *  Request methods:HTTP 請求方式
+
   　Request methods:HTTP: GET /index.html
 
 
@@ -159,6 +201,7 @@ HTTP Headr分類：
    Date: Wed, 31 Jul 2024 02:12:13 GMT
 
   * Status Code: 回傳執行結果
+   
    Status Code:200 OK
 
 
@@ -185,7 +228,11 @@ HTTP Headr分類：
 
 request和respon包含的數據內容。
 
-==== Payload Vs form
+Request Payload (Request body) : 客戶端傳送Request請求所攜帶的資源參數。
+
+Response Payload (Response  body) : 伺服器端回傳Response所攜帶的資源參數。
+
+==== Payload vs. form
 
 [width=85%, cols="2,4,3"]
 [options="header"]
@@ -202,21 +249,21 @@ request和respon包含的數據內容。
 }| name=John+Doe&age=30
 |===
 
-  https://blog.csdn.net/qq_43842093/article/details/125883101
+  參考資料：https://blog.csdn.net/qq_43842093/article/details/125883101
 
 == Request Method
+
 .GET
 * 查詢
 * 會回傳結果，帶參數的查詢會加在URL上面
-[帶參數GET方法URL]
 
----
-https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
+帶參數GET方法URL
 
----
+ https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
+
 
 .HEAD
-* 查詢對象的資訊
+* 查詢對象的header
 * 不會回傳資料
 
 .POST
@@ -232,7 +279,7 @@ https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
 * 修改的項目會包在body裡面
 
 .PATCH
-* 修改資料
+* 更新資料
 * 只修改異動的部分部分
 
 .DELETE
@@ -248,6 +295,65 @@ EX.代理伺服器連線
 .TRACE		
 * 偵測HTTP請求其間是否有變化，中間路由若有錯誤可用此方法
 * HTML表單內不適用
+
+==== hTTP method 比較
+[width=75%, cols="1,1,1,1,2,6"]
+[options="header"]
+|===
+|Verb |SAFE |IDEMPOTENT|Cacheable|動作|語意
+|GET	|O	|O	|O	|讀取	|請求所需要的資源。
+|HEAD	|O	|O	|O	|讀取	|與GET相同，但只傳Header不傳資料。
+|POST	|X	|X	|O	|新增	|在請求中攜帶負載(payload)，並執行新增/修改。
+|PUT	|X	|O	|X	|完整更新	|請求更新一筆資源的所有內容，必須是存在的資源，資源傳遞必須完整，否則為空。
+|PATCH	|X	|X	|X	|部分更新	|請求更新一筆資源的部分內容，必須是存在的資源。
+|DELETE	|X	|O	|x	|刪除	|請求移除資源。
+|CONNECT	|X	|X	|x	|建立通訊	|向server端建立連線
+|OPTIONS	|O	|O	|x	|查詢通訊方式	|告訴server允許的通訊方式
+|TRACE	|O	|O	|x	|偵測	|偵測HTTP通訊請求方式。
+
+|===
+  參考資料：
+  https://hackmd.io/@monkenWu/Sk9Q5VoV4/https%3A%2F%2Fhackmd.io%2F%40gen6UjQISdy0QDN62cYPYQ%2FH1yxwXyNN?type=book
+
+
+==== HTTP Statue Code
+
+回傳HTTP請求是否已成功
+
+1.資訊性回覆( 100– 199)
+
+2.成功回覆( 200– 299)
+
+3.重定向訊息( 300– 399)
+
+4.客戶端錯誤回應( 400– 499)
+
+5.伺服器錯誤回應( 500– 599)
+					
+==== 200 OK
+請求成功。 
+
+==== 304 Not Modified
+用戶重新導向頁面時不需重新發request
+
+==== 401 Unauthorized
+伺服器無法驗證用戶端身分的時候回傳，並夾帶 "WWW-Authenticate"的，告訴用戶端必須提供身分驗證的訊息。
+
+==== 404 Not Found
+伺服器找不到所請求的資源。在瀏覽器中，這表示該 URL 無法識別。
+
+==== 405 Method Not Allowed
+伺服器已知請求方法，但目標資源不支援。例如不允許呼叫DELETE刪除資源。
+
+==== 503 Service Unavailable
+伺服器尚未準備好處理請求。
+
+常見原因是伺服器因維護而停機或過載。
+
+==== 504 Gateway Timeout
+當伺服器，無法及時得到回應時，會出現此錯誤回應。
+
+
 
 == 什麼是跨域資源共享(Cross-Origin Resource Sharing) ?
 瀏覽器的同源政策(Same-Origin-Policy)
