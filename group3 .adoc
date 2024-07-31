@@ -87,75 +87,127 @@ const releasedYear = phone?.year;
 
 == HTTP
 .主要特點：
-* 無狀態(stateless)：每個請求與其之前或之後的請求無關。
-* 可擴展(scalable)：通過標頭和方法可以擴展功能。
-* 安全性：HTTPS（HTTP Secure）提供了加密和身份驗證。
+* 無狀態(stateless)：每個請求與其之前或之後的請求無關
+* 可擴展(scalable)：通過標頭和方法可以擴展功能
+* 安全性：HTTPS（HTTP Secure）提供了加密和身份驗證
+
+** HTTP status Code不屬於狀態，是請求完成後的結果
 
 == HTTP Headers/Payload
 
+發請求和接收回應的重要組成部分
 
-HTTP Headers（HTTP標頭）和Payload（負載）是HTTP請求和響應的重要組成部分。
+用一個信封比喻
 
-HTTP Headers：
-請求標頭：包含客戶端向服務器發送的資料和訊息(如瀏覽器類型、 傳遞的資料類型etc..）。
-常見請求Http headers：
+* HTTP Headers=> 地址、寄件人、收件人...
 
-* Host：指定目標服務器的主機名。
+* Payload => 信件內容
 
-* User-Agent：客戶端應用程序的資訊（如瀏覽器類型和版本）
-
-* Accept：客戶端接受類型(text/html, application/json)
-
-* Authorization：身份驗證信息。
+---
 
 
-舊的客戶端的HttpHeader，大多數已經廢除。 
+=== HTTP Headers：
+
+客戶端和服務器之間互動所附加的的訊息(如瀏覽器類型、 傳遞的資料類型etc..)
+
+
+自定義的header訊息用『x-』開頭，大多數已經廢除。
 
 * 例子: 
-x-content-type-options:nosniff(響應式網頁相關)
+
+ x-content-type-options:　nosniff //響應式網頁相關 
+ 
 
 
-IANA(互聯網地址分配的機構)將HTTPHeadr分類：
+HTTP Headr分類：
 
 ==== 1.Request Headers
 
-* 包含有關請求的資訊（request)，如用戶端的詳細資訊或特定的請求參數。
+客戶端發出請求時夾帶的訊息，如要訪問的伺服器名稱、可接受的編碼格式等
+
+
+常見的Request headers訊息：
+
+  * Host: 訪問的伺服器主機名稱
+  
+   Host: www.w3schools.com
+
+  * User-Agent：客戶端應用程序的資訊
+    
+   User-Agent：　Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+
+  * Accept-Encoding： 客戶端編碼格式
+
+  　Accept-Encoding: gzip, deflate, br
+
+  *  Request methods:HTTP 請求方式
+  　Request methods:HTTP: GET /index.html
+
 
 ==== 2.Response Headers
 
-* 包含回應的資訊。
+伺服器回應的訊息。
+  
+常見的Response headers訊息：
+  
+  * Server: 伺服器端的server類型
+  
+   Server :ECS (hhp/9ABD)
+  
+  * Date: 回傳日期
+
+   Date: Wed, 31 Jul 2024 02:12:13 GMT
+
+  * Status Code: 回傳執行結果
+   Status Code:200 OK
+
+
 
 ==== 3.Representation header
 
-表示是特定資源的不同形式， request 和respon都支援 用於客戶端解析
-相同資源轉換成不同資訊
+表示回傳內容的格式，放在response Header裡面
 
+* Content-Type: 回傳資源的格式
+ 
+ Content-Type: text/html
 
-* Content-Type 格式
+* Content-Encoding: 編碼
 
-text/html、application/json、XML...
+ Content-Encoding: gzip
 
-* Content-Encoding 編碼
+* Content-Language： 語言
 
-gzip、compress...
+ Content-Language： en
 
-* Content-Language：　語言
-
-en、tw...
-
-* Content-Location 檔案的位置(可能和URL位置不同)
-
-Content-Location: /documents/document1.html
 
 
 ==== Payload：
 
-request和respon包含的數據內容，通常是表單數據、JSON數據等服務器返回的數據。
+request和respon包含的數據內容。
+
+==== Payload Vs form
+
+[width=85%, cols="2,4,3"]
+[options="header"]
+[%autowidth]
+|===
+| |Payload |form
+|資料格式 |支援多種格式 如: json、xml、URL編碼格式... |URL編碼格式、
+多部分編碼格式
+|Context-type 
+| application/json .1+| application/x-www-form-urlencoded
+|資料格式|{
+  "name": "John Doe",
+  "age": 30
+}| name=John+Doe&age=30
+|===
+
+  https://blog.csdn.net/qq_43842093/article/details/125883101
 
 == Request Method
 .GET
 * 查詢
-* 會回傳結果帶參數的查詢會加在URL上面
+* 會回傳結果，帶參數的查詢會加在URL上面
 [帶參數GET方法URL]
 
 ---
@@ -168,7 +220,7 @@ https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
 * 不會回傳資料
 
 .POST
-* 增和改
+* 增、改
 * 較常用在新增資料
 * 修改的項目會包在body裡面
 
@@ -177,6 +229,7 @@ https://book.tpml.edu.tw/search?searchInput=javascript&searchField=FullText
 * 常用在修改資料
 * 整筆覆蓋
 * 若修改對象不存在 => 新增一筆新的
+* 修改的項目會包在body裡面
 
 .PATCH
 * 修改資料
