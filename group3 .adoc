@@ -2,10 +2,10 @@
 :highlightjs-theme: atom-one-dark-reasonable
 [,javascript]
 
-= Object literal (物件實字)
+== Object literal (物件實字)
 
-* 用大括號來建立物件的語法
-* 屬性用名值對(name-value pairs)表示
+用大括號來建立物件的語法
+屬性用名值對(name-value pairs)表示
 
 [source, javascript]
 
@@ -19,10 +19,10 @@ const person = {
 
 ----
 
-* ES6後，物件的擴展（object literal extension）
-* 物件屬性簡寫
-* 變數名稱和屬性名稱一樣
-* 物件的屬性名稱為變數的名稱，物件的屬性值為變數的值
+=== ES6後，物件的擴展（object literal extension）
+==== 物件屬性簡寫
+變數名稱和屬性名稱一樣
+物件的屬性名稱為變數的名稱，物件的屬性值為變數的值
 
 [source, javascript]
 ----
@@ -32,9 +32,9 @@ let msg2 = { // 縮寫前
 };
 let msg2 = { text }; // 縮寫後 
 ----
-* 物件函式的語法簡寫
-* 省略了冒號 : 和 function 關鍵字
-* 這樣簡寫的方法，預設的屬性名稱會是字串的型態，本的簡寫 fn( ){...} 等同於 'fn'( ){...} 
+==== 物件函式的語法簡寫
+省略了冒號 : 和 function 關鍵字
+這樣簡寫的方法，預設的屬性名稱會是字串的型態，本的簡寫 fn( ){...} 等同於 'fn'( ){...}
 
 [source, javascript]
 ----
@@ -44,15 +44,21 @@ let obj1 = {
     return 'ES5';
   }
 };
+console.log(obj1.fn());//ES5
+----
+
+[source,javascript]
+----
 // ES6
 let obj3 = {
   fn() {
     return 'ES6';
   }
 };
+console.log(obj3.fn());//ES6
 ----
-* 具運算性的屬性名稱
-* 使用 中括號[ ] 將表達式作為屬性名稱
+==== 具運算性的屬性名稱
+使用中括號[ ] 將表達式作為屬性名稱
 
 [source, javascript]
 ----
@@ -62,12 +68,14 @@ let obj = {
 console.log(obj.name); // kent
 ----
 
+#撰寫程式碼的時候, 以團隊 code styling 為主, 儘量不寫縮寫過後的程式碼#
+
 == Optional Chaining
 
-* 可選串連運算子
-* 在「要確認的屬性或函式」後方「加上或換上」「?.」
-* 避開TypeError Exception
-* 判斷當前（?. 左側）這個屬性或函式是否為 Nullish 值：也就 undefined 或 null，有的話會往右繼續執行，否則就停止執行，並回傳undefined
+可選串連運算子
+在「要確認的屬性或函式」後方「加上或換上」「?.」
+避開TypeError Exception
+判斷當前（?. 左側）這個屬性或函式是否為 Nullish 值：也就 undefined 或 null，有的話會往右繼續執行，否則就停止執行，並回傳undefined
 
 [source, javascript]
 
@@ -75,15 +83,35 @@ console.log(obj.name); // kent
 const releasedYear = phone?.year;
 //先確認 phone 屬性再取得 year 屬性值回傳
 ----
+==== Nullish coalescing operator
+空值合併運算子
+在「要確認的屬性或函式」後方「加上或換上」「??」
+當左側的操作數為null或者undefined時，返回其右側操作數，否則返回左側操作數
+
+[source,javascript]
+
+----
+const foo=null ?? 'default string';
+console.log(foo);//"default string"
+
+const baz=0 ?? 42;
+console.log(baz);//0
+----
+
 
 == JavaScript Object vs JSON
 
-* JSON就是一組字串(純文字)
-* JavaScript Object在使用{ }建立物件時，屬性名稱是可以有引號也可以沒有的，但在JSON格式中，屬性名稱一定要有引號
-* 物件中的值為function，是無法透過JSON傳遞的
+JSON( JavaScript Object Notation )就是一組字串
+JavaScript Object在使用{ }建立物件時，屬性名稱是可以有引號也可以沒有的，但在JSON格式中，屬性名稱一定要有雙引號
+物件中的值為function，是無法透過JSON傳遞的
 
-* 將物件轉成JSON格式 JSON.stringify();
-* 將JSON格式轉成物件 JSON.parse()
+
+將物件轉成JSON格式 JSON.stringify();
+
+image::JSON.stringify.jpg[]
+將JSON格式轉成物件 JSON.parse()
+
+image::JSON.parse.jpg[]
 
 == HTTP
 .主要特點：
