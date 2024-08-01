@@ -4,8 +4,8 @@
 
 == Object literal (物件實字)
 
-用大括號來建立物件的語法
-屬性用名值對(name-value pairs)表示
+ * 用大括號來建立物件的語法
+ * 屬性用名值對(name-value pairs)表示
 
 [source, javascript]
 
@@ -21,8 +21,8 @@ const person = {
 
 === ES6後，物件的擴展（object literal extension）
 ==== 物件屬性簡寫
-變數名稱和屬性名稱一樣
-物件的屬性名稱為變數的名稱，物件的屬性值為變數的值
+ * 變數名稱和屬性名稱一樣
+ * 物件的屬性名稱為變數的名稱，物件的屬性值為變數的值
 
 [source, javascript]
 ----
@@ -33,8 +33,8 @@ let msg2 = { // 縮寫前
 let msg2 = { text }; // 縮寫後 
 ----
 ==== 物件函式的語法簡寫
-省略了冒號 : 和 function 關鍵字
-這樣簡寫的方法，預設的屬性名稱會是字串的型態，本的簡寫 fn( ){...} 等同於 'fn'( ){...}
+ * 省略了冒號 : 和 function 關鍵字
+ * 這樣簡寫的方法，預設的屬性名稱會是字串的型態，本的簡寫 fn( ){...} 等同於 'fn'( ){...}
 
 [source, javascript]
 ----
@@ -58,7 +58,7 @@ let obj3 = {
 console.log(obj3.fn());//ES6
 ----
 ==== 具運算性的屬性名稱
-使用中括號[ ] 將表達式作為屬性名稱
+ * 使用中括號[ ] 將表達式作為屬性名稱
 
 [source, javascript]
 ----
@@ -72,10 +72,10 @@ console.log(obj.name); // kent
 
 == Optional Chaining
 
-可選串連運算子
-在「要確認的屬性或函式」後方「加上或換上」「?.」
-避開TypeError Exception
-判斷當前（?. 左側）這個屬性或函式是否為 Nullish 值：也就 undefined 或 null，有的話會往右繼續執行，否則就停止執行，並回傳undefined
+ * 可選串連運算子
+ * 在「要確認的屬性或函式」後方「加上或換上」「?.」
+ * 避開TypeError Exception
+ * 判斷當前（?. 左側）這個屬性或函式是否為 Nullish 值：也就是  undefined 或 null，有的話會往右繼續執行，否則就停止執行，並回傳undefined
 
 [source, javascript]
 
@@ -85,9 +85,9 @@ const releasedYear = phone?.year;
 ----
 ==== Nullish coalescing operator
 
-空值合併運算子
-在「要確認的屬性或函式」後方「加上或換上」「??」
-當左側的操作數為null或者undefined時，返回其右側操作數，否則返回左側操作數
+ * 空值合併運算子
+ * 在「要確認的屬性或函式」後方「加上或換上」「??」
+ * 當左側的操作數為null或者undefined時，返回其右側操作數，否則返回左側操作數
 
 [source,javascript]
 
@@ -102,15 +102,15 @@ console.log(baz);//0
 
 == JavaScript Object vs JSON
 
-JSON( JavaScript Object Notation )就是一組字串
-JavaScript Object在使用{ }建立物件時，屬性名稱是可以有引號也可以沒有的，但在JSON格式中，屬性名稱一定要有雙引號
-物件中的值為function，是無法透過JSON傳遞的
+ * JSON( JavaScript Object Notation )就是一組字串
+ * JavaScript Object在使用{ }建立物件時，屬性名稱是可以有引號也可以沒有的，但在JSON格式中，屬性名稱一定要有雙引號
+ * 物件中的值為function，是無法透過JSON傳遞的
 
 
-將物件轉成JSON格式 JSON.stringify();
+ * 將物件轉成JSON格式 JSON.stringify();
 
 image::JSON.stringify.jpg[]
-將JSON格式轉成物件 JSON.parse()
+ * 將JSON格式轉成物件 JSON.parse()
 
 image::JSON.parse.jpg[]
 
@@ -416,40 +416,71 @@ EX: GET請求的若重新發送的同時，伺服器上的資源有被更動過�
 5.伺服器錯誤回應( 500– 599)
 					
 ==== 200 OK
-請求成功。 
 
-==== 300
+請求成功。
 
-==== 301
+==== 301 Moved Permanently
+
+永久的重導向
+所請求的資源的 URL 已永久更改
+
+==== 302 Found
+
 暫時的重導向
-
-==== 302 永久的重導向
-
+所請求的資源的 URI 已暫時更改
 
 ==== 304 Not Modified
+
 用戶重新導向頁面時不需重新發request
 
 ==== 400 bad request
 
+用戶端錯誤的原因（例如 錯誤的請求語法、無效的請求訊息框架或欺騙性的請求路由），伺服器無法或不會處理該請求
+
 ==== 401 Unauthorized
-伺服器無法驗證用戶端身分的時候回傳，並夾帶 "WWW-Authenticate"的，告訴用戶端必須提供身分驗證的訊息。
+
+伺服器無法驗證用戶端身分的時候回傳，並夾帶 "WWW-Authenticate"的，告訴用戶端必須提供身分驗證的訊息
 
 ==== 404 Not Found
-伺服器找不到所請求的資源。在瀏覽器中，這表示該 URL 無法識別。
+
+伺服器找不到所請求的資源。在瀏覽器中，這表示該 URL 無法識別
 
 ==== 405 Method Not Allowed
-伺服器已知請求方法，但目標資源不支援。例如不允許呼叫DELETE刪除資源。
+
+伺服器已知請求方法，但目標資源不支援。例如不允許呼叫DELETE刪除資源
 
 
 ==== 500 Internal Server Error
 
-==== 503 Service Unavailable
-伺服器尚未準備好處理請求。
+伺服器遇到一個它不知道如何處理的情況。
 
-常見原因是伺服器因維護而停機或過載。
+==== 503 Service Unavailable
+
+伺服器尚未準備好處理請求
+
+常見原因是伺服器因維護而停機或過載
 
 ==== 504 Gateway Timeout
-當伺服器，無法及時得到回應時，會出現此錯誤回應。
+
+當伺服器，無法及時得到回應時，會出現此錯誤回應
+
+
+=== HTTP port
+
+常見的HTTP port
+
+==== HTTP:80
+
+未加密的 HTTP
+
+==== HTTPS:443
+
+加密的 HTTP，使用 SSL/TLS 協議來加密數據，確保數據在傳輸過程中的安全性。
+
+==== SSH:22
+
+用於在不安全的網絡上安全地訪問和管理遠程伺服器。它提供了加密通信，並常用於遠程登入系統和執行命令。
+
 
 
 
