@@ -10,11 +10,11 @@ Server 可以去和瀏覽器說, 允許除了自身以外, 及自身允許的來
 
 同源必須符合三項條件:
 
-. 同通訊埠(port)
-
 . 同通訊協定(protocol)
 
 . 同網域(domain)
+
+. 同通訊埠(port)
 
 那假如現在後端設定的 Response Headers 中 `Access-Control-Allow-Origin` 為: `https://api.example.com`
 
@@ -27,13 +27,13 @@ Server 可以去和瀏覽器說, 允許除了自身以外, 及自身允許的來
 
 |https://app.example.com
 |N
-|不同 domain
+|不同 sub domain
 
 |http://api.example.com:5000
 |N
 |不同 port
 
-|http://api.example.com/login
+|https://api.example.com/login
 |Y
 |
 |===
@@ -130,7 +130,7 @@ image::pr.png[Alt Text]
 == 什麼是跨站請求偽造(Cross Site Reuqest Forgery)？
 在使用者已經驗證身份的網站中, 執行惡意的偽造操作。
 
-Step1: 使用者成功登入 A 銀行網站的帳戶，並且代表使用者身份的 cookie 在 local 保存下來，所以下次再來訪問 A 銀行網站時，就不用重新登入。
+Step1: 使用者成功登入 A 銀行網站的帳戶，並且代表使用者身份的 cookie 在 Cookie 保存下來，所以下次再來訪問 A 銀行網站時，就不用重新登入。
 
 Step2: 因為使用者沒有登出 A 銀行網站的帳戶，在瀏覽 B 惡意網站時，B 網站有個被設為透明的圖片，因為是透明的，所以使用者在畫面上看不到，然而該圖片包含一段惡意程式碼，連結如下。
 
